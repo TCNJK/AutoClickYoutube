@@ -3,19 +3,14 @@
   "name": "YouTube Auto Continue",
   "version": "1.0",
   "description": "Tự động click popup tiếp tục xem video trên YouTube.",
-  "permissions": [
-    "scripting",
-    "tabs"
-  ],
-  "host_permissions": [
-    "https://www.youtube.com/*"
-  ],
+  "permissions": ["storage", "scripting", "tabs"],
+  "host_permissions": ["https://www.youtube.com/*"],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
+    "default_popup": "popup.html",
     "default_icon": {
-      "default_popup": "popup.html",
       "16": "icon.png",
       "48": "icon.png",
       "128": "icon.png"
@@ -23,12 +18,8 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://www.youtube.com/*"
-      ],
-      "js": [
-        "content.js"
-      ]
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"]
     }
   ]
 }
