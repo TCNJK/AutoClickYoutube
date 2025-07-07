@@ -1,23 +1,48 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const button = document.getElementById("toggle");
+  //#region Auto Click ContinueButton
+  const continueButton = document.getElementById("autoContinueButton");
 
-  chrome.storage.local.get("autoClickEnabled", (data) => {
-    const isEnabled = data.autoClickEnabled ?? true;
-    updateButton(isEnabled);
+  chrome.storage.local.get("autoContinueButtonEnabled", (data) => {
+    const isEnabled = data.autoContinueButtonEnabled ?? true;
+    updateContinueButton(isEnabled);
   });
 
-  button.addEventListener("click", () => {
-    chrome.storage.local.get("autoClickEnabled", (data) => {
-      const current = data.autoClickEnabled ?? true;
+  continueButton.addEventListener("click", () => {
+    chrome.storage.local.get("autoContinueButtonEnabled", (data) => {
+      const current = data.autoContinueButtonEnabled ?? true;
       const next = !current;
-      chrome.storage.local.set({ autoClickEnabled: next }, () => {
-        updateButton(next);
+      chrome.storage.local.set({ autoContinueButtonEnabled: next }, () => {
+        updateContinueButton(next);
       });
     });
   });
 
-  function updateButton(isEnabled) {
-    button.textContent = isEnabled ? "Turn OFF" : "Turn ON";
-    button.style.backgroundColor = isEnabled ? "#e74c3c" : "#2ecc71";
+  function updateContinueButton(isEnabled) {
+    continueButton.textContent = isEnabled ? "Continue Turn OFF" : "Continue Turn ON";
+    continueButton.style.backgroundColor = isEnabled ? "#e74c3c" : "#2ecc71";
   }
+  //#endregion
+  // //#region Auto Click Skip ADS
+  // const skipAdsButton = document.getElementById("autoSkipADS");
+
+  // chrome.storage.local.get("autoSkipADSButtonEnabled", (data) => {
+  //   const isEnabled = data.autoSkipADSButtonEnabled ?? true;
+  //   updateSkipButton(isEnabled);
+  // });
+
+  // skipAdsButton.addEventListener("click", () => {
+  //   chrome.storage.local.get("autoSkipADSButtonEnabled", (data) => {
+  //     const current = data.autoSkipADSButtonEnabled ?? true;
+  //     const next = !current;
+  //     chrome.storage.local.set({ autoSkipADSButtonEnabled: next }, () => {
+  //       updateSkipButton(next);
+  //     });
+  //   });
+  // });
+
+  // function updateSkipButton(isEnabled) {
+  //   continueButton.textContent = isEnabled ? "Skip ADS Turn OFF" : "Skip ADS Turn ON";
+  //   continueButton.style.backgroundColor = isEnabled ? "#e74c3c" : "#2ecc71";
+  // }
+  // //#endregion
 });

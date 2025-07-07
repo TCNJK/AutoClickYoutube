@@ -1,44 +1,50 @@
-let intervalId = null;
+let timeTracker = 5000;
 
-function autoClickConfirmButton() {
+//#region Auto Continue Button
+let continueButtonIntervalId = null;
+
+function autoClickContinueButton() {
   const popup = document.querySelector("yt-confirm-dialog-renderer[dialog]");
 
   if (popup) {
-    const button = popup.querySelector("#confirm-button button");
-    if (button) {
-      console.log("🔁 Found YouTube pause popup. Clicking 'Yes' button.");
-      button.click();
+    const continueButton = popup.querySelector("#confirm-button button");
+    if (continueButton) {
+      console.log("🔁 Found YouTube pause popup. Clicking 'Continue' button. " + new Date().toLocaleString());
+      continueButton.click();
+      console.log("🔁 Clicking 'Continue' button successful. " + new Date().toLocaleString());
+      popup.remove();
     }
   }
 }
 
-function startAutoClick() {
-  if (!intervalId) {
-    intervalId = setInterval(autoClickConfirmButton, 3000);
-    console.log("▶️ AutoClick started");
+function startAutoClickContinueButton() {
+  if (!continueButtonIntervalId) {
+    continueButtonIntervalId = setInterval(autoClickContinueButton, timeTracker);
+    console.log("▶️ AutoClick ContinueButton started");
   }
 }
 
-function stopAutoClick() {
-  if (intervalId) {
-    clearInterval(intervalId);
-    intervalId = null;
-    console.log("⏹️ AutoClick stopped");
+function stopAutoClickContinueButton() {
+  if (continueButtonIntervalId) {
+    clearInterval(continueButtonIntervalId);
+    continueButtonIntervalId = null;
+    console.log("⏹️ AutoClick ContinueButton stopped");
   }
 }
 
-chrome.storage.local.get("autoClickEnabled", (data) => {
-  const isEnabled = data.autoClickEnabled ?? true;
-  if (isEnabled) startAutoClick();
+chrome.storage.local.get("autoContinueButtonEnabled", (data) => {
+  const isEnabled = data.autoContinueButtonEnabled ?? true;
+  if (isEnabled) startAutoClickContinueButton();
 });
 
 chrome.storage.onChanged.addListener((changes) => {
-  if (changes.autoClickEnabled) {
-    const newValue = changes.autoClickEnabled.newValue;
+  if (changes.autoContinueButtonEnabled) {
+    const newValue = changes.autoContinueButtonEnabled.newValue;
     if (newValue) {
-      startAutoClick();
+      startAutoClickContinueButton();
     } else {
-      stopAutoClick();
+      stopAutoClickContinueButton();
     }
   }
 });
+//#endregion
