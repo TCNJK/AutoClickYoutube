@@ -4,15 +4,15 @@ let timeTracker = 5000;
 let continueButtonIntervalId = null;
 
 function autoClickContinueButton() {
-  const popup = document.querySelector("yt-confirm-dialog-renderer[dialog]");
-
-  if (popup) {
-    const continueButton = popup.querySelector("#confirm-button button");
-    if (continueButton) {
-      console.log("🔁 Found YouTube pause popup. Clicking 'Continue' button. " + new Date().toLocaleString());
-      continueButton.click();
-      console.log("🔁 Clicking 'Continue' button successful. " + new Date().toLocaleString());
-      popup.remove();
+  const dialog = document.querySelector("tp-yt-paper-dialog");
+  if (dialog && dialog.style.display !== "none") {
+    const popup = dialog.querySelector("yt-confirm-dialog-renderer[dialog]");
+    if (popup) {
+      const continueButton = popup.querySelector("#confirm-button button");
+      if (continueButton) {
+        console.log("🔁 Found YouTube pause popup. Clicking 'Continue' button. " + new Date().toLocaleString());
+        continueButton.click();
+      }
     }
   }
 }
