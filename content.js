@@ -4,17 +4,19 @@ let timeTracker = 5000;
 let continueButtonIntervalId = null;
 
 function autoClickContinueButton() {
-  const dialog = document.querySelector("tp-yt-paper-dialog");
-  if (dialog && dialog.style.display !== "none") {
-    const popup = dialog.querySelector("yt-confirm-dialog-renderer[dialog]");
-    if (popup) {
-      const continueButton = popup.querySelector("#confirm-button button");
-      if (continueButton) {
-        console.log("🔁 Found YouTube pause popup. Clicking 'Continue' button. " + new Date().toLocaleString());
-        continueButton.click();
+  const dialogList = document.querySelectorAll("tp-yt-paper-dialog");
+  dialogList.forEach(dialog => {
+    if (dialog && dialog.style.display !== "none") {
+      const popup = dialog.querySelector("yt-confirm-dialog-renderer[dialog]");
+      if (popup) {
+        const continueButton = popup.querySelector("#confirm-button button");
+        if (continueButton) {
+          console.log("🔁 Found YouTube pause popup. Clicking 'Continue' button. " + new Date().toLocaleString());
+          continueButton.click();
+        }
       }
     }
-  }
+  });
 }
 
 function startAutoClickContinueButton() {
